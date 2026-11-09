@@ -22,6 +22,7 @@ class ProjectEvaluator:
             result = self.engine.evaluate(metadata, resource_type=resource_kind)
             rows.append({
                 "layer_name": layer_name,
+                "layer_id": entry.get("id"),
                 "resource_type": result["resource_type"],
                 "resource_label": result["resource_label"],
                 "total_score": result["total_score"],

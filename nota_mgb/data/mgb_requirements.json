@@ -1,0 +1,354 @@
+{
+  "_fonte": "Perfil MGB 2.0, Apêndice 1 (Quadros 84, 85 e 86). 'quadro'/'linha' apontam para a origem de cada elemento.",
+  "profile_name": "Perfil MGB 2.0",
+  "elements": {
+    "metadataIdentifier": {
+      "label": "Identificador do metadado",
+      "quadro": 84,
+      "linha": 1,
+      "iso": "MD_Metadata.metadataIdentifier > MD_Identifier.code",
+      "aliases": [
+        "metadata_id",
+        "fileIdentifier"
+      ],
+      "help": "Código único deste metadado. O plugin gera um UUID e o mantém."
+    },
+    "metadataLanguage": {
+      "label": "Idioma do metadado",
+      "quadro": 84,
+      "linha": 2,
+      "iso": "MD_Metadata.defaultLocale > PT_Locale.language",
+      "domain": "LanguageCode",
+      "aliases": [
+        "metadata_language",
+        "defaultLocaleLanguage"
+      ],
+      "help": "Idioma em que o metadado está escrito (ISO 639-2). Em geral: por."
+    },
+    "metadataCharacterSet": {
+      "label": "Código de caracteres do metadado",
+      "quadro": 84,
+      "linha": 3,
+      "iso": "MD_Metadata.defaultLocale > PT_Locale.characterEncoding",
+      "domain": "MD_CharacterSetCode",
+      "aliases": [
+        "metadata_character_set",
+        "defaultLocaleEncoding"
+      ],
+      "help": "Codificação do texto do metadado. O XML exportado é UTF-8."
+    },
+    "metadataScope": {
+      "label": "Escopo do metadado",
+      "quadro": 84,
+      "linha": 4,
+      "iso": "MD_Metadata.metadataScope > MD_MetadataScope.resourceScope",
+      "domain": "MD_ScopeCode",
+      "aliases": [
+        "resourceScope",
+        "scope"
+      ],
+      "help": "A que o metadado se refere. Para uma camada: Conjunto de dados."
+    },
+    "metadataContactRole": {
+      "label": "Papel do responsável pelo metadado",
+      "quadro": 84,
+      "linha": 5,
+      "iso": "MD_Metadata.contact > CI_Responsibility.role",
+      "domain": "CI_RoleCode",
+      "aliases": [
+        "metadata_contact_role"
+      ],
+      "help": "Papel de quem responde pelo metadado (ex.: Contato)."
+    },
+    "metadataContactName": {
+      "label": "Nome do responsável pelo metadado",
+      "quadro": 84,
+      "linha": 6,
+      "iso": "MD_Metadata.contact > CI_Responsibility.party > CI_Organisation.name | CI_Individual.name",
+      "aliases": [
+        "metadataContact",
+        "metadata_contact"
+      ],
+      "help": "Organização ou pessoa responsável por este metadado."
+    },
+    "metadataDate": {
+      "label": "Data do metadado",
+      "quadro": 84,
+      "linha": 7,
+      "iso": "MD_Metadata.dateInfo > CI_Date.date",
+      "validator": "date",
+      "aliases": [
+        "metadata_date"
+      ],
+      "help": "Data em que o metadado foi criado ou revisado."
+    },
+    "metadataDateType": {
+      "label": "Tipo da data do metadado",
+      "quadro": 84,
+      "linha": 8,
+      "iso": "MD_Metadata.dateInfo > CI_Date.dateType",
+      "domain": "CI_DateTypeCode",
+      "aliases": [
+        "metadata_date_type"
+      ],
+      "help": "O que a data do metadado indica (criação, revisão...)."
+    },
+    "metadataProfile": {
+      "label": "Perfil de metadados",
+      "quadro": 84,
+      "linha": 9,
+      "iso": "MD_Metadata.metadataProfile > CI_Citation.title",
+      "fixed": "Perfil MGB 2.0",
+      "aliases": [
+        "metadata_profile",
+        "profile"
+      ],
+      "help": "Sempre \"Perfil MGB 2.0\"."
+    },
+    "resourceTitle": {
+      "label": "Título",
+      "quadro": 84,
+      "linha": 10,
+      "iso": "MD_DataIdentification.citation > CI_Citation.title",
+      "aliases": [
+        "title"
+      ],
+      "help": "Nome do dado, claro e sem siglas soltas."
+    },
+    "resourceDate": {
+      "label": "Data do recurso",
+      "quadro": 84,
+      "linha": 11,
+      "iso": "MD_DataIdentification.citation > CI_Citation.date > CI_Date.date",
+      "validator": "date",
+      "aliases": [
+        "resource_date"
+      ],
+      "help": "Data de referência do dado (criação, publicação ou revisão)."
+    },
+    "resourceDateType": {
+      "label": "Tipo da data do recurso",
+      "quadro": 84,
+      "linha": 12,
+      "iso": "MD_DataIdentification.citation > CI_Citation.date > CI_Date.dateType",
+      "domain": "CI_DateTypeCode",
+      "aliases": [
+        "resource_date_type"
+      ],
+      "help": "O que a data do recurso indica."
+    },
+    "resourceAbstract": {
+      "label": "Resumo",
+      "quadro": 84,
+      "linha": 13,
+      "iso": "MD_DataIdentification.abstract",
+      "aliases": [
+        "abstract"
+      ],
+      "help": "Resumo do dado: o que é, onde, quando e como foi produzido."
+    },
+    "resourceStatus": {
+      "label": "Status",
+      "quadro": 84,
+      "linha": 14,
+      "iso": "MD_DataIdentification.status",
+      "domain": "MD_ProgressCode",
+      "aliases": [
+        "status"
+      ],
+      "help": "Situação do dado (concluído, em andamento...)."
+    },
+    "resourceContactName": {
+      "label": "Nome do responsável pelo recurso",
+      "quadro": 84,
+      "linha": 15,
+      "iso": "MD_DataIdentification.pointOfContact > CI_Responsibility.party > CI_Organisation.name | CI_Individual.name",
+      "aliases": [
+        "resourcePointOfContact",
+        "pointOfContact"
+      ],
+      "help": "Organização ou pessoa responsável pelo dado."
+    },
+    "spatialRepresentationType": {
+      "label": "Tipo de representação espacial",
+      "quadro": 85,
+      "linha": 2,
+      "iso": "MD_DataIdentification.spatialRepresentationType",
+      "domain": "MD_SpatialRepresentationTypeCode",
+      "aliases": [
+        "spatial_representation_type"
+      ],
+      "help": "Vetorial para camadas vetoriais, matricial para raster."
+    },
+    "topicCategory": {
+      "label": "Categoria temática",
+      "quadro": 85,
+      "linha": 3,
+      "iso": "MD_DataIdentification.topicCategory",
+      "domain": "MD_TopicCategoryCode",
+      "aliases": [
+        "topic_category",
+        "categories"
+      ],
+      "help": "Tema principal do dado, da lista ISO/MGB."
+    },
+    "extent": {
+      "label": "Extensão",
+      "quadro": 85,
+      "linha": 4,
+      "iso": "MD_DataIdentification.extent > EX_Extent (Quadro 32; recomendado: retângulo envolvente)",
+      "validator": "extent",
+      "aliases": [
+        "boundingBox"
+      ],
+      "help": "Retângulo envolvente em graus decimais, calculado da camada."
+    },
+    "resourceLanguage": {
+      "label": "Idioma do recurso",
+      "quadro": 85,
+      "linha": 5,
+      "iso": "MD_DataIdentification.defaultLocale > PT_Locale.language",
+      "domain": "LanguageCode",
+      "aliases": [
+        "language"
+      ],
+      "help": "Idioma do conteúdo do dado (ISO 639-2). Em geral: por."
+    },
+    "resourceCharacterSet": {
+      "label": "Código de caracteres do recurso",
+      "quadro": 85,
+      "linha": 6,
+      "iso": "MD_DataIdentification.defaultLocale > PT_Locale.characterEncoding",
+      "domain": "MD_CharacterSetCode",
+      "aliases": [
+        "characterSet",
+        "encoding"
+      ],
+      "help": "Codificação dos textos do dado (atributos)."
+    },
+    "spatialResolution": {
+      "label": "Escala equivalente ou resolução (planimétrica, altimétrica ou angular)",
+      "quadro": 86,
+      "linha": 2,
+      "iso": "MD_DataIdentification.spatialResolution > MD_Resolution",
+      "any_of": {
+        "equivalentScale": "positive_integer",
+        "distance": "positive_number",
+        "vertical": "positive_number",
+        "angularDistance": "positive_number"
+      },
+      "aliases": {
+        "equivalentScale": [
+          "scale",
+          "scaleDenominator"
+        ],
+        "distance": [
+          "resolution",
+          "gridResolution"
+        ]
+      },
+      "help": "Para vetor: denominador da escala (ex.: 50000). Para raster: tamanho do pixel em metros."
+    }
+  },
+  "resource_types": {
+    "general": {
+      "label": "Recursos em geral (exceto serviços)",
+      "quadro": 84,
+      "required": [
+        "metadataIdentifier",
+        "metadataLanguage",
+        "metadataCharacterSet",
+        "metadataScope",
+        "metadataContactRole",
+        "metadataContactName",
+        "metadataDate",
+        "metadataDateType",
+        "metadataProfile",
+        "resourceTitle",
+        "resourceDate",
+        "resourceDateType",
+        "resourceAbstract",
+        "resourceStatus",
+        "resourceContactName"
+      ]
+    },
+    "cdg": {
+      "label": "Conjunto de dados geográficos (CDG) ou série",
+      "quadro": 85,
+      "extends": "general",
+      "required": [
+        "spatialRepresentationType",
+        "topicCategory",
+        "extent",
+        "resourceLanguage",
+        "resourceCharacterSet"
+      ]
+    },
+    "scn": {
+      "label": "CDG ou série do Sistema Cartográfico Nacional (SCN)",
+      "quadro": 86,
+      "extends": "cdg",
+      "required": [
+        "spatialResolution"
+      ]
+    }
+  },
+  "quality_criteria": {
+    "summary": {
+      "weight": 8,
+      "description": "Resumo informativo",
+      "min_length": 200
+    },
+    "keywords": {
+      "weight": 5,
+      "description": "Palavras-chave",
+      "min_count": 3
+    },
+    "lineage": {
+      "weight": 5,
+      "description": "Linhagem"
+    },
+    "restrictions": {
+      "weight": 4,
+      "description": "Restrições e licença"
+    },
+    "referenceSystem": {
+      "weight": 4,
+      "description": "Sistema de referência"
+    },
+    "contact": {
+      "weight": 2,
+      "description": "Contato completo"
+    },
+    "distribution": {
+      "weight": 2,
+      "description": "Distribuição"
+    }
+  },
+  "quality_aliases": {
+    "keywords": [
+      "tags"
+    ],
+    "lineage": [
+      "processingHistory",
+      "history"
+    ],
+    "license": [
+      "licenses",
+      "rights",
+      "constraints"
+    ],
+    "referenceSystem": [
+      "srid",
+      "crs"
+    ],
+    "email": [
+      "contactEmail"
+    ],
+    "distribution": [
+      "download",
+      "link",
+      "links"
+    ]
+  }
+}
