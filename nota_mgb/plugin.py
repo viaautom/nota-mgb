@@ -1,6 +1,6 @@
 """Nota MGB: registro no QGIS e controle do painel (avaliar, corrigir).
 
-Copyright (C) 2026 Ibexdev
+Copyright (C) 2026 Rafael Dantas de Morais (Ibexdev)
 Licença: GNU GPL v2 ou superior.
 """
 
@@ -170,8 +170,12 @@ class MgbMetadataPlugin:
         save_metadata(layer, {c["id"]: c["new"] for c in changes})
         log(f"{layer.name()}: preenchidos {', '.join(c['id'] for c in changes)}")
         self.evaluate_layer()
-        filled = "\n".join(f"• {c['label']}: {c['reason']}" for c in changes)
-        self.dock.set_fix_message(f"Preenchido automaticamente:\n{filled}\n\nConfira e complete o restante abaixo.")
+        details = "\n".join(f"• {c['label']}: {c['reason']}" for c in changes)
+        self.dock.set_fix_message(
+            f"{len(changes)} campo(s) preenchido(s) automaticamente (passe o mouse para ver quais). "
+            "Complete o restante abaixo.",
+            details,
+        )
         self.iface.messageBar().pushSuccess(PLUGIN_NAME, f"{len(changes)} campo(s) preenchido(s). Salve o projeto.")
 
     def save_form(self, values: Dict[str, Any]) -> None:

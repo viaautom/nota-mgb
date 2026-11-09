@@ -14,7 +14,6 @@ from qgis.PyQt.QtWidgets import (
     QComboBox,
     QDateEdit,
     QDockWidget,
-    QFormLayout,
     QHBoxLayout,
     QHeaderView,
     QLabel,
@@ -130,9 +129,11 @@ class MgbValidationPanel(QDockWidget):
         layout.addWidget(self.fix_info)
 
         self.form_host = QWidget()
-        self.form_layout = QFormLayout(self.form_host)
+        self.form_layout = QVBoxLayout(self.form_host)  # rótulo em cima do campo: cabe em painel estreito
+        self.form_layout.addStretch(1)
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         scroll.setWidget(self.form_host)
         layout.addWidget(scroll, 1)
 
@@ -221,14 +222,20 @@ class MgbValidationPanel(QDockWidget):
         if item is not None and item.data(USER_ROLE):
             self.layer_selected.emit(item.data(USER_ROLE))
 
-    def set_fix_message(self, text: str) -> None:
+    def set_fix_message(self, text: str, details: str = "") -> None:
         self.fix_info.setText(text)
+        self.fix_info.setToolTip(details)
 
     # --- formulário guiado ---------------------------------------------------
 
     def _clear_form(self) -> None:
-        while self.form_layout.rowCount():
-            self.form_layout.removeRow(0)
+        while self.form_layout.count() > 1:  # mantém o stretch final
+            item = self.form_layout.takeAt(0)
+            old = item.widget()
+            if old is not None:
+                old.hide()
+                old.setParent(None)
+                old.deleteLater()
         self._form_widgets = {}
         self.save_button.setEnabled(False)
 
@@ -250,17 +257,19 @@ class MgbValidationPanel(QDockWidget):
             field = issue["id"]
             spec = elements[field]
             widget = self._widget_for(field, spec, domain_values, current.get(field))
-            label = QLabel(spec["label"])
+            label = _wrap_label(spec["label"], "font-weight: bold;")
             label.setToolTip(spec.get("iso", ""))
             box = QWidget()
             box_layout = QVBoxLayout(box)
-            box_layout.setContentsMargins(0, 0, 0, 6)
+            box_layout.setContentsMargins(0, 0, 0, 10)
+            box_layout.setSpacing(2)
+            box_layout.addWidget(label)
             box_layout.addWidget(widget)
             help_text = spec.get("help", "")
             if issue["problem"] == "invalid":
                 help_text = f"{issue['message']} {help_text}"
             box_layout.addWidget(_wrap_label(help_text, "color: #666; font-size: 11px;"))
-            self.form_layout.addRow(label, box)
+            self.form_layout.insertWidget(self.form_layout.count() - 1, box)
             self._form_widgets[field] = widget
         self.save_button.setEnabled(True)
 
