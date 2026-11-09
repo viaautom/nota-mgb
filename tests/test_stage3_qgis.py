@@ -47,7 +47,11 @@ class QgisIntegrationTests(unittest.TestCase):
         from qgis.core import QgsFeature, QgsGeometry
 
         feature = QgsFeature()
-        feature.setGeometry(QgsGeometry.fromWkt("POLYGON((600000 7700000, 700000 7700000, 700000 7800000, 600000 7800000, 600000 7700000))"))
+        feature.setGeometry(
+            QgsGeometry.fromWkt(
+                "POLYGON((600000 7700000, 700000 7700000, 700000 7800000, 600000 7800000, 600000 7700000))"
+            )
+        )
         provider.addFeatures([feature])
         self.layer.updateExtents()
         self.project = QgsProject()
@@ -85,6 +89,33 @@ class QgisIntegrationTests(unittest.TestCase):
         self.assertTrue(result["is_conforme"], result["issues"])
         self.assertEqual(self.layer.metadata().title(), "Limites")
         self.assertEqual(self.layer.metadata().categories(), ["boundaries"])
+
+    def test_import_mgb2009_migrate_and_export(self):
+        from pathlib import Path
+
+        from core.iso_xml import from_xml, importable, to_xml
+
+        fixture = next((Path(__file__).parent / "fixtures" / "inde_mgb2009").glob("6b508c1a*.xml"))
+        self.save_metadata(
+            self.layer, importable(from_xml(fixture.read_text(encoding="utf-8"))), self.project
+        )
+        self.assertEqual(
+            self.read(self.layer)["referenceSystem"], "SIRGAS2000"
+        )  # nome do MGB 2009, fica no bloco
+        self.save_metadata(self.layer, {"referenceSystem": "4674"}, self.project)
+        self.assertEqual(
+            self.layer.metadata().crs().authid(), "EPSG:4674"
+        )  # código sem prefixo vira EPSG:4674
+
+        metadata = self.read(self.layer)
+        changes = self.propose_fill(metadata, self.layer_facts(self.layer), self.engine)
+        self.save_metadata(self.layer, {c["id"]: c["new"] for c in changes}, self.project)
+        final = self.read(self.layer)
+        self.assertTrue(self.engine.evaluate(final, "cdg")["is_conforme"])
+
+        back = from_xml(to_xml(final))
+        self.assertEqual(back["metadataProfile"], "Perfil MGB 2.0")
+        self.assertEqual(back["resourceDate"], "2020-10-27")
 
     def test_panel_builds_form_offscreen(self):
         from ui.panel import MgbValidationPanel

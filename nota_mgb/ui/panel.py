@@ -49,6 +49,11 @@ class MgbValidationPanel(QDockWidget):
     save_requested = pyqtSignal(dict)
     resource_type_changed = pyqtSignal(str)
     layer_selected = pyqtSignal(str)
+    export_xml_requested = pyqtSignal()
+    export_project_xml_requested = pyqtSignal()
+    export_report_requested = pyqtSignal()
+    export_project_report_requested = pyqtSignal()
+    import_xml_requested = pyqtSignal()
 
     def __init__(self, resource_types: Dict[str, str], parent: Optional[QWidget] = None):
         super().__init__("Nota MGB", parent)
@@ -121,7 +126,9 @@ class MgbValidationPanel(QDockWidget):
         layout = QVBoxLayout(tab)
 
         autofill = QPushButton("Preencher automaticamente")
-        autofill.setToolTip("Calcula a partir da camada: extensão, SRC, tipo, codificação, identificador, data e perfil.")
+        autofill.setToolTip(
+            "Calcula a partir da camada: extensão, SRC, tipo, codificação, identificador, data e perfil."
+        )
         autofill.clicked.connect(self.autofill_requested.emit)
         layout.addWidget(autofill)
 
@@ -146,9 +153,53 @@ class MgbValidationPanel(QDockWidget):
     def _build_export_tab(self) -> QWidget:
         tab = QWidget()
         layout = QVBoxLayout(tab)
-        layout.addWidget(_wrap_label("Exportação do XML ISO 19115-3 e do relatório: próxima etapa."))
+
+        def button(text: str, signal: Any, tip: str = "") -> QPushButton:
+            btn = QPushButton(text)
+            btn.setToolTip(tip)
+            btn.clicked.connect(signal.emit)
+            layout.addWidget(btn)
+            return btn
+
+        layout.addWidget(_wrap_label("XML ISO 19115-3", "font-weight: bold;"))
+        self.export_xml_button = button(
+            "Exportar XML da camada…",
+            self.export_xml_requested,
+            "Arquivo pronto para importar no GeoNetwork (schema iso19115-3.mgb da INDE).",
+        )
+        self.export_xml_button.setEnabled(False)
+        button(
+            "Exportar XML de todas as camadas conformes…",
+            self.export_project_xml_requested,
+            "Um arquivo por camada conforme, numa pasta.",
+        )
+        self.export_hint = _wrap_label(
+            "Avalie a camada: o XML só é exportado com o selo Conforme.", "color: #666; font-size: 11px;"
+        )
+        layout.addWidget(self.export_hint)
+
+        layout.addSpacing(12)
+        layout.addWidget(_wrap_label("Relatório (HTML)", "font-weight: bold;"))
+        button("Relatório da camada…", self.export_report_requested)
+        button("Relatório do projeto…", self.export_project_report_requested)
+
+        layout.addSpacing(12)
+        layout.addWidget(_wrap_label("Importar", "font-weight: bold;"))
+        button(
+            "Importar XML (ISO 19115-3 ou ISO 19139)…",
+            self.import_xml_requested,
+            "Lê um metadado já publicado e grava na camada ativa. Aceita o MGB 2009 (19139) para migrar.",
+        )
         layout.addStretch(1)
         return tab
+
+    def set_export_enabled(self, is_conforme: bool) -> None:
+        self.export_xml_button.setEnabled(is_conforme)
+        self.export_hint.setText(
+            "Pronto para exportar."
+            if is_conforme
+            else "O XML só é exportado com o selo Conforme. Corrija as pendências na aba Corrigir."
+        )
 
     # --- estado ------------------------------------------------------------
 
@@ -169,8 +220,10 @@ class MgbValidationPanel(QDockWidget):
         self.issue_list.clear()
         self._clear_form()
         self.fix_info.setText("Avalie a camada para ver o que falta.")
+        self.set_export_enabled(False)
 
     def show_result(self, result: Dict[str, Any], quality_labels: Dict[str, Dict[str, Any]]) -> None:
+        self.set_export_enabled(result["is_conforme"])
         selo = result["selo"]
         color = SELO_COLORS.get(selo, "#444")
         self.score_label.setText(f"{result['total_score']:.0f}/100")
@@ -186,14 +239,17 @@ class MgbValidationPanel(QDockWidget):
         self.issue_list.clear()
         for issue in result["issues"]:
             prefix = "Falta" if issue["problem"] == "missing" else "Inválido"
-            text = f"{prefix}: {issue['label']} — {issue['message']}  (Quadro {issue['quadro']}, linha {issue['linha']})"
+            where = f"Quadro {issue['quadro']}, linha {issue['linha']}"
+            text = f"{prefix}: {issue['label']} — {issue['message']}  ({where})"
             item = QListWidgetItem(text)
             item.setData(USER_ROLE, issue["id"])
             self.issue_list.addItem(item)
         for name, ok in result["quality_checks"].items():
             if not ok:
                 spec = quality_labels.get(name, {})
-                item = QListWidgetItem(f"Melhoria: {spec.get('description', name)} (+{spec.get('weight', 0)} pts)")
+                item = QListWidgetItem(
+                    f"Melhoria: {spec.get('description', name)} (+{spec.get('weight', 0)} pts)"
+                )
                 item.setForeground(Qt.GlobalColor.darkGray)
                 self.issue_list.addItem(item)
         if not self.issue_list.count():
@@ -251,7 +307,7 @@ class MgbValidationPanel(QDockWidget):
         if not issues:
             self.fix_info.setText("Todos os obrigatórios estão preenchidos.")
             return
-        self.fix_info.setText(f"{len(issues)} campo(s) a corrigir. Comece por \"Preencher automaticamente\".")
+        self.fix_info.setText(f'{len(issues)} campo(s) a corrigir. Comece por "Preencher automaticamente".')
 
         for issue in issues:
             field = issue["id"]
@@ -274,7 +330,9 @@ class MgbValidationPanel(QDockWidget):
         self.save_button.setEnabled(True)
 
     @staticmethod
-    def _widget_for(field: str, spec: Dict[str, Any], domain_values: Dict[str, List[tuple]], value: Any) -> QWidget:
+    def _widget_for(
+        field: str, spec: Dict[str, Any], domain_values: Dict[str, List[tuple]], value: Any
+    ) -> QWidget:
         if "domain" in spec:
             combo = QComboBox()
             combo.addItem("— escolha —", None)
@@ -291,7 +349,7 @@ class MgbValidationPanel(QDockWidget):
             date.setDate(parsed if parsed.isValid() else QDate.currentDate())
             return date
         if spec.get("validator") == "extent" or "fixed" in spec:
-            return _wrap_label("Preenchido por \"Preencher automaticamente\".", "font-style: italic;")
+            return _wrap_label('Preenchido por "Preencher automaticamente".', "font-style: italic;")
         if field == "resourceAbstract":
             text = QPlainTextEdit(str(value or ""))
             text.setMinimumHeight(90)

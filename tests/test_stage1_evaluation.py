@@ -13,8 +13,8 @@ class Stage1EvaluationTests(unittest.TestCase):
 
     def test_required_counts_match_quadros(self):
         self.assertEqual(len(self.engine.required_fields("general")), 15)  # Q84
-        self.assertEqual(len(self.engine.required_fields("cdg")), 20)      # Q85 (extensão = 1)
-        self.assertEqual(len(self.engine.required_fields("scn")), 21)      # Q86
+        self.assertEqual(len(self.engine.required_fields("cdg")), 20)  # Q85 (extensão = 1)
+        self.assertEqual(len(self.engine.required_fields("scn")), 21)  # Q86
 
     def test_complete_cdg_is_excelente(self):
         result = self.engine.evaluate(dict(cdg_metadata(), **quality_fields()), "cdg")

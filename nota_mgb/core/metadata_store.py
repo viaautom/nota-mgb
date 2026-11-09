@@ -15,8 +15,14 @@ from .qgis_metadata_adapter import PLUGIN_PROPERTY
 DATE_TYPES_QGIS = {"creation": "Created", "publication": "Published", "revision": "Revised"}
 
 ALWAYS_NATIVE = {
-    "resourceTitle", "resourceAbstract", "resourceLanguage", "resourceCharacterSet",
-    "topicCategory", "referenceSystem", "extent", "resourceContactName",
+    "resourceTitle",
+    "resourceAbstract",
+    "resourceLanguage",
+    "resourceCharacterSet",
+    "topicCategory",
+    "referenceSystem",
+    "extent",
+    "resourceContactName",
 }
 
 
@@ -51,7 +57,11 @@ def _set_native(metadata: Any, field: str, value: Any) -> None:
     elif field == "topicCategory":
         metadata.setCategories(_as_list(value))
     elif field == "referenceSystem":
-        metadata.setCrs(QgsCoordinateReferenceSystem(str(value)))
+        code = str(value).strip()
+        crs = QgsCoordinateReferenceSystem(f"EPSG:{code}" if code.isdigit() else code)
+        if not crs.isValid():
+            return False  # ex.: "SIRGAS2000" (MGB 2009): o texto fica no bloco do plugin
+        metadata.setCrs(crs)
     elif field == "extent":
         spatial = QgsLayerMetadata.SpatialExtent()
         spatial.extentCrs = QgsCoordinateReferenceSystem("EPSG:4326")
@@ -110,8 +120,7 @@ def save_metadata(layer: Any, values: Dict[str, Any], project: Any = None) -> Di
             values.pop("resourceDateType", None)
 
     for field, value in values.items():
-        if field in ALWAYS_NATIVE:
-            _set_native(metadata, field, value)
+        if field in ALWAYS_NATIVE and _set_native(metadata, field, value) is not False:
             block.pop(field, None)
             native.append(field)
         else:

@@ -14,7 +14,9 @@ def _extent_wgs84(layer: Any) -> Optional[Dict[str, float]]:
     wgs84 = QgsCoordinateReferenceSystem("EPSG:4326")
     if layer.crs() != wgs84:
         try:
-            rect = QgsCoordinateTransform(layer.crs(), wgs84, QgsProject.instance()).transformBoundingBox(rect)
+            rect = QgsCoordinateTransform(layer.crs(), wgs84, QgsProject.instance()).transformBoundingBox(
+                rect
+            )
         except Exception:  # noqa: BLE001 - QgsCsException: extensão não convertível
             return None
     return {

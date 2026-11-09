@@ -51,9 +51,22 @@ class QgisMetadataAdapter:
 
     MINIMUM_QGIS_VERSION = MINIMUM_QGIS_VERSION
     SUPPORTED_FIELDS = [
-        "title", "abstract", "identifier", "language", "encoding", "type", "keywords",
-        "categories", "contacts", "licenses", "rights", "constraints", "links",
-        "history", "crs", "extent",
+        "title",
+        "abstract",
+        "identifier",
+        "language",
+        "encoding",
+        "type",
+        "keywords",
+        "categories",
+        "contacts",
+        "licenses",
+        "rights",
+        "constraints",
+        "links",
+        "history",
+        "crs",
+        "extent",
     ]
 
     @classmethod
@@ -104,7 +117,12 @@ class QgisMetadataAdapter:
             wgs84 = QgsCoordinateReferenceSystem("EPSG:4326")
             if crs.isValid() and crs != wgs84:
                 rect = QgsCoordinateTransform(crs, wgs84, QgsProject.instance()).transformBoundingBox(rect)
-            return {"west": rect.xMinimum(), "south": rect.yMinimum(), "east": rect.xMaximum(), "north": rect.yMaximum()}
+            return {
+                "west": rect.xMinimum(),
+                "south": rect.yMinimum(),
+                "east": rect.xMaximum(),
+                "north": rect.yMaximum(),
+            }
         except Exception:  # noqa: BLE001 - extensão ilegível conta como ausente
             return None
 
@@ -142,23 +160,29 @@ class QgisMetadataAdapter:
             history = _call(metadata, "history") or []
             constraints = [c.constraint for c in (_call(metadata, "constraints") or [])]
 
-            result.update({
-                "resourceTitle": _clean(_call(metadata, "title")),
-                "resourceAbstract": _clean(_call(metadata, "abstract")),
-                "resourceIdentifier": _clean(_call(metadata, "identifier")),
-                "resourceLanguage": _clean(_call(metadata, "language")),
-                "resourceCharacterSet": _clean(_call(metadata, "encoding")),
-                "topicCategory": _clean(_call(metadata, "categories")),
-                "keywords": _clean(keywords),
-                "resourceContactName": _clean(first.name or first.organization) if first else None,
-                "resourceContactRole": _clean(first.role) if first else None,
-                "email": _clean(first.email) if first else None,
-                "license": _clean(list(_call(metadata, "licenses") or []) + list(_call(metadata, "rights") or []) + constraints),
-                "distribution": _clean([link.url for link in (_call(metadata, "links") or [])]),
-                "lineage": _clean(list(history)),
-                "referenceSystem": _clean(crs.authid()) if crs is not None and crs.isValid() else None,
-                "extent": cls._extent_wgs84(metadata),
-            })
+            result.update(
+                {
+                    "resourceTitle": _clean(_call(metadata, "title")),
+                    "resourceAbstract": _clean(_call(metadata, "abstract")),
+                    "resourceIdentifier": _clean(_call(metadata, "identifier")),
+                    "resourceLanguage": _clean(_call(metadata, "language")),
+                    "resourceCharacterSet": _clean(_call(metadata, "encoding")),
+                    "topicCategory": _clean(_call(metadata, "categories")),
+                    "keywords": _clean(keywords),
+                    "resourceContactName": _clean(first.name or first.organization) if first else None,
+                    "resourceContactRole": _clean(first.role) if first else None,
+                    "email": _clean(first.email) if first else None,
+                    "license": _clean(
+                        list(_call(metadata, "licenses") or [])
+                        + list(_call(metadata, "rights") or [])
+                        + constraints
+                    ),
+                    "distribution": _clean([link.url for link in (_call(metadata, "links") or [])]),
+                    "lineage": _clean(list(history)),
+                    "referenceSystem": _clean(crs.authid()) if crs is not None and crs.isValid() else None,
+                    "extent": cls._extent_wgs84(metadata),
+                }
+            )
             result.update(cls._resource_date(metadata))
 
         result.update({k: v for k, v in cls.read_plugin_block(layer).items() if v not in (None, "", [])})

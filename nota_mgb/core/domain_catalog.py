@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Tuple
 
@@ -92,12 +93,26 @@ class DomainCatalog:
         return self.normalize(domain_name, value) is not None
 
     def suggest(self, domain_name: str, value: Any) -> Optional[str]:
-        """Suggested valid code for a common invalid value (e.g. 'pt-BR' -> 'por')."""
+        """Suggested valid code for a common invalid value.
+
+        Ex.: 'pt-BR' -> 'por' (lista de sugestões) e 'Concluído' -> 'completed'
+        (rótulo oficial em português no lugar do código).
+        """
         if value is None:
             return None
+        key = _fold(str(value))
         spec = self._spec(domain_name)
-        suggestions = {k.lower(): v for k, v in spec.get("suggestions", {}).items()}
-        return suggestions.get(str(value).strip().lower())
+        suggestions = {_fold(k): v for k, v in spec.get("suggestions", {}).items()}
+        if key in suggestions:
+            return suggestions[key]
+        labels = {_fold(label): code for code, label in self.get_values(domain_name).items()}
+        return labels.get(key)
+
+
+def _fold(text: str) -> str:
+    """Minúsculas e sem acento, para comparar rótulos digitados à mão."""
+    normalized = unicodedata.normalize("NFKD", text.strip().lower())
+    return "".join(ch for ch in normalized if not unicodedata.combining(ch))
 
 
 __all__ = ["DomainCatalog", "DOMAINS_PATH"]

@@ -20,21 +20,23 @@ class ProjectEvaluator:
             metadata = entry.get("metadata") or {}
             resource_kind = entry.get("resource_type") or resource_type
             result = self.engine.evaluate(metadata, resource_type=resource_kind)
-            rows.append({
-                "layer_name": layer_name,
-                "layer_id": entry.get("id"),
-                "resource_type": result["resource_type"],
-                "resource_label": result["resource_label"],
-                "total_score": result["total_score"],
-                "conformity_score": result["conformity_score"],
-                "quality_score": result["quality_score"],
-                "status": result["status"],
-                "selo": result["selo"],
-                "missing_required": result["missing_required"],
-                "invalid_required_values": result["invalid_required_values"],
-                "is_conforme": result["is_conforme"],
-                "issues": result["issues"],
-            })
+            rows.append(
+                {
+                    "layer_name": layer_name,
+                    "layer_id": entry.get("id"),
+                    "resource_type": result["resource_type"],
+                    "resource_label": result["resource_label"],
+                    "total_score": result["total_score"],
+                    "conformity_score": result["conformity_score"],
+                    "quality_score": result["quality_score"],
+                    "status": result["status"],
+                    "selo": result["selo"],
+                    "missing_required": result["missing_required"],
+                    "invalid_required_values": result["invalid_required_values"],
+                    "is_conforme": result["is_conforme"],
+                    "issues": result["issues"],
+                }
+            )
 
         # pior primeiro: não conformes antes, depois menor nota
         rows.sort(key=lambda item: (item["is_conforme"], item["total_score"]))

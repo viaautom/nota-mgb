@@ -55,7 +55,12 @@ class AutofillTests(unittest.TestCase):
         self.assertNotIn("resourceCharacterSet", changes)
 
     def test_raster_gets_grid_and_pixel_size(self):
-        facts = {"kind": "raster", "crs": "EPSG:31983", "pixelSizeMeters": 30.0, "extent": VECTOR_FACTS["extent"]}
+        facts = {
+            "kind": "raster",
+            "crs": "EPSG:31983",
+            "pixelSizeMeters": 30.0,
+            "extent": VECTOR_FACTS["extent"],
+        }
         changes = {c["id"]: c["new"] for c in fill({}, facts)}
         self.assertEqual(changes["spatialRepresentationType"], "grid")
         self.assertEqual(changes["distance"], 30.0)
@@ -65,10 +70,19 @@ class AutofillTests(unittest.TestCase):
         start = {"resourceTitle": "Limites"}
         filled = apply_changes(start, fill(start))
         missing = set(self.engine.evaluate(filled, "cdg")["missing_required"])
-        self.assertEqual(missing, {
-            "metadataContactRole", "metadataContactName", "resourceDate", "resourceDateType",
-            "resourceAbstract", "resourceStatus", "resourceContactName", "topicCategory",
-        })
+        self.assertEqual(
+            missing,
+            {
+                "metadataContactRole",
+                "metadataContactName",
+                "resourceDate",
+                "resourceDateType",
+                "resourceAbstract",
+                "resourceStatus",
+                "resourceContactName",
+                "topicCategory",
+            },
+        )
 
 
 if __name__ == "__main__":

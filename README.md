@@ -2,9 +2,9 @@
 
 Plugin gratuito e de código aberto (GPL v2+) para **QGIS 3.28 ou superior**, desenvolvido por **Rafael Dantas de Morais (Ibexdev)**.
 
-Dá uma nota de 0 a 100 ao metadado de cada camada segundo o **Perfil MGB 2.0** da INDE (IBGE/DSG, 2021), mostra o que falta para ficar conforme e preenche sozinho o que dá para calcular a partir da camada.
+Dá uma nota de 0 a 100 ao metadado de cada camada segundo o **Perfil MGB 2.0** da INDE (IBGE/DSG, 2021), mostra o que falta para ficar conforme, preenche sozinho o que dá para calcular a partir da camada e exporta o XML ISO 19115-3 pronto para o catálogo da INDE.
 
-> Versão 0.1.0 (experimental).
+> Versão 0.2.0 (experimental).
 
 ## Funcionalidades
 
@@ -15,6 +15,10 @@ Dá uma nota de 0 a 100 ao metadado de cada camada segundo o **Perfil MGB 2.0** 
 - **Avaliar projeto:** todas as camadas numa tabela, da pior para a melhor.
 - **Preencher automaticamente:** identificador (UUID), perfil, escopo, data do metadado, tipo de representação, extensão em graus, SRC, codificação e, em raster, o tamanho do pixel. Nunca sobrescreve um valor válido.
 - **Formulário guiado:** só os campos que faltam, com as listas oficiais do MGB 2.0 em português (status, categoria temática, papel, tipo de data, idioma ISO 639-2).
+- **Correção automática de valores comuns:** "pt-BR" → "por", "Concluído" → "completed", "27/10/2020" → "2020-10-27".
+- **Exportar XML ISO 19115-3:** da camada ou de todas as camadas conformes do projeto. Mesma estrutura dos registros do schema `iso19115-3.mgb` do catálogo da INDE, validada contra o XSD oficial. Só exporta com o selo Conforme.
+- **Relatório HTML** da camada ou do projeto, para anexar a entregas (pode ser impresso em PDF pelo navegador).
+- **Importar XML** ISO 19115-3 ou ISO 19139 (MGB 2009) para avaliar e migrar metadados já publicados.
 - Funciona sem internet e sem chave de API.
 
 O que o QGIS suporta é gravado no metadado nativo da camada (Propriedades da camada → Metadados). O resto fica numa propriedade do plugin salva no projeto. **Salve o projeto** depois de corrigir.
@@ -30,12 +34,11 @@ O que o QGIS suporta é gravado no metadado nativo da camada (Propriedades da ca
 1. Selecione uma camada vetorial ou raster e clique no ícone **100 MGB** da barra de ferramentas.
 2. Veja a nota e as pendências na aba **Avaliar**.
 3. Na aba **Corrigir**, clique em **Preencher automaticamente**, complete o formulário e clique em **Salvar e reavaliar**.
-4. Salve o projeto.
+4. Na aba **Exportar**, gere o XML e importe-o no GeoNetwork.
+5. Salve o projeto.
 
 ## Próximas versões
 
-- Exportar XML ISO 19115-3 (schema `iso19115-3.mgb` do catálogo da INDE) e relatório.
-- Importar XML ISO 19115-3 e ISO 19139 (MGB 2009).
 - Sugestões de resumo, palavras-chave e categoria com IA (opcional).
 
 ## Referência

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import datetime as _dt
 import json
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -37,12 +38,18 @@ def _as_list(value: Any) -> List[Any]:
     return [value]
 
 
+_PARTIAL_DATE = re.compile(r"^\d{4}(-(0[1-9]|1[0-2]))?$")  # gco:Date aceita xs:gYear e xs:gYearMonth
+_BR_DATE = re.compile(r"^(\d{1,2})/(\d{1,2})/(\d{4})$")
+
+
 def _is_date(value: Any) -> bool:
     if isinstance(value, (_dt.date, _dt.datetime)):
         return True
     text = _text(value)
     if not text:
         return False
+    if _PARTIAL_DATE.match(text):
+        return True
     if text.endswith("Z"):
         text = text[:-1]
     for parser in (_dt.datetime.fromisoformat, _dt.date.fromisoformat):
@@ -52,6 +59,18 @@ def _is_date(value: Any) -> bool:
         except ValueError:
             continue
     return False
+
+
+def _date_suggestion(value: Any) -> Optional[str]:
+    """'27/10/2020' -> '2020-10-27' (formato brasileiro, sem ambiguidade)."""
+    match = _BR_DATE.match(_text(value))
+    if not match:
+        return None
+    day, month, year = (int(g) for g in match.groups())
+    try:
+        return _dt.date(year, month, day).isoformat()
+    except ValueError:
+        return None
 
 
 def _to_float(value: Any) -> Optional[float]:
@@ -169,7 +188,9 @@ class MetadataEvaluationEngine:
                     return None
             if not found_any:
                 return dict(issue, problem="missing", message="Elemento obrigatório ausente.")
-            return dict(issue, problem="invalid", message="Informe um valor maior que zero (escala: número inteiro).")
+            return dict(
+                issue, problem="invalid", message="Informe um valor maior que zero (escala: número inteiro)."
+            )
 
         value = self._value(metadata, field)
         if value is None:
@@ -177,7 +198,9 @@ class MetadataEvaluationEngine:
 
         if "fixed" in spec:
             if _text(value) != spec["fixed"]:
-                return dict(issue, problem="invalid", message=f"O valor deve ser exatamente \"{spec['fixed']}\".")
+                return dict(
+                    issue, problem="invalid", message=f"O valor deve ser exatamente \"{spec['fixed']}\"."
+                )
             return None
 
         domain = spec.get("domain")
@@ -185,18 +208,25 @@ class MetadataEvaluationEngine:
             bad = [item for item in _as_list(value) if not self.catalog.validate(domain, item)]
             if bad:
                 quadro = self.catalog.quadro(domain)
-                message = f"Valor fora da lista {domain} (Quadro {quadro}): {', '.join(_text(b) for b in bad)}."
+                message = (
+                    f"Valor fora da lista {domain} (Quadro {quadro}): {', '.join(_text(b) for b in bad)}."
+                )
                 suggestion = self.catalog.suggest(domain, bad[0])
                 result = dict(issue, problem="invalid", message=message, domain=domain)
                 if suggestion:
                     result["suggestion"] = suggestion
-                    result["message"] += f" Use \"{suggestion}\"."
+                    result["message"] += f' Use "{suggestion}".'
                 return result
             return None
 
         validator = spec.get("validator")
         if validator == "date" and not _is_date(value):
-            return dict(issue, problem="invalid", message="Data inválida; use o formato AAAA-MM-DD.")
+            result = dict(issue, problem="invalid", message="Data inválida; use o formato AAAA-MM-DD.")
+            suggestion = _date_suggestion(value)
+            if suggestion:
+                result["suggestion"] = suggestion
+                result["message"] += f' Use "{suggestion}".'
+            return result
         if validator == "extent" and not _is_valid_extent(value):
             return dict(
                 issue,
@@ -223,7 +253,10 @@ class MetadataEvaluationEngine:
         checks["referenceSystem"] = bool(_text(self._quality_value(metadata, "referenceSystem")))
 
         email = _text(self._quality_value(metadata, "email"))
-        has_contact = bool(_text(self._value(metadata, "resourceContactName")) or _text(self._value(metadata, "metadataContactName")))
+        has_contact = bool(
+            _text(self._value(metadata, "resourceContactName"))
+            or _text(self._value(metadata, "metadataContactName"))
+        )
         checks["contact"] = has_contact and "@" in email
 
         checks["distribution"] = bool(_text(self._quality_value(metadata, "distribution")))

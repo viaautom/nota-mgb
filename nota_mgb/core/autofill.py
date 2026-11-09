@@ -34,45 +34,46 @@ def propose_fill(
     issues = {i["id"]: i for i in engine.evaluate(metadata, "scn")["issues"]}
     changes: List[Dict[str, Any]] = []
 
+    fixed: set = set()
+
     def propose(field: str, value: Any, reason: str) -> None:
-        if value in (None, "", []) or field not in issues:
+        if value in (None, "", []) or field not in issues or field in fixed:
             return
-        old = metadata.get(field)
-        changes.append({
-            "id": field,
-            "label": engine.elements[field]["label"],
-            "old": old,
-            "new": value,
-            "reason": reason,
-        })
+        fixed.add(field)
+        changes.append(
+            {
+                "id": field,
+                "label": engine.elements[field]["label"],
+                "old": metadata.get(field),
+                "new": value,
+                "reason": reason,
+            }
+        )
 
-    def fixed_language(field: str) -> Optional[str]:
-        suggestion = issues.get(field, {}).get("suggestion")
-        return suggestion or (DEFAULT_LANGUAGE if issues.get(field, {}).get("problem") == "missing" else None)
+    # 1) correções seguras de valores inválidos (pt-BR -> por, Concluído -> completed, 27/10/2020 -> 2020-10-27)
+    for field, issue in issues.items():
+        if issue.get("suggestion"):
+            propose(field, issue["suggestion"], f'Corrigido de "{metadata.get(field)}" para o valor válido.')
 
+    # 2) valores calculáveis do que falta
+    missing = {f for f, i in issues.items() if i["problem"] == "missing"}
     propose("metadataIdentifier", new_id(), "Identificador gerado (UUID).")
     propose("metadataProfile", PROFILE, "Valor fixo do perfil.")
     propose("metadataScope", "dataset", "Camada = conjunto de dados.")
     propose("metadataCharacterSet", XML_CHARSET, "O XML exportado é gravado em UTF-8.")
-    propose("metadataLanguage", fixed_language("metadataLanguage"), "Idioma em ISO 639-2; confira.")
-    if "metadataDate" in issues:
+    if "metadataLanguage" in missing:
+        propose("metadataLanguage", DEFAULT_LANGUAGE, "Idioma padrão (ISO 639-2); confira.")
+    if "metadataDate" in missing:
         propose("metadataDate", today.isoformat(), "Data de hoje.")
-        if "metadataDateType" in issues or not metadata.get("metadataDateType"):
-            changes.append({
-                "id": "metadataDateType",
-                "label": engine.elements["metadataDateType"]["label"],
-                "old": metadata.get("metadataDateType"),
-                "new": "creation",
-                "reason": "Metadado criado hoje.",
-            })
-    else:
-        propose("metadataDateType", "creation", "Tipo de data padrão.")
+    if "metadataDateType" in missing:
+        propose("metadataDateType", "creation", "Metadado criado hoje.")
 
     kind = facts.get("kind")
     representation = {"vector": "vector", "raster": "grid"}.get(kind or "")
     propose("spatialRepresentationType", representation, "Tipo da camada no QGIS.")
     propose("extent", facts.get("extent"), "Calculada da camada e convertida para graus (WGS 84).")
-    propose("resourceLanguage", fixed_language("resourceLanguage"), "Idioma em ISO 639-2; confira.")
+    if "resourceLanguage" in missing:
+        propose("resourceLanguage", DEFAULT_LANGUAGE, "Idioma padrão (ISO 639-2); confira.")
 
     encoding = catalog.normalize("MD_CharacterSetCode", facts.get("encoding"))
     if encoding is None and kind == "raster":
@@ -80,22 +81,26 @@ def propose_fill(
     propose("resourceCharacterSet", encoding, "Codificação informada pelo provedor da camada.")
 
     if facts.get("pixelSizeMeters") and "spatialResolution" in issues:
-        changes.append({
-            "id": "distance",
-            "label": engine.elements["spatialResolution"]["label"],
-            "old": metadata.get("distance"),
-            "new": round(float(facts["pixelSizeMeters"]), 6),
-            "reason": "Tamanho do pixel do raster, em metros.",
-        })
+        changes.append(
+            {
+                "id": "distance",
+                "label": engine.elements["spatialResolution"]["label"],
+                "old": metadata.get("distance"),
+                "new": round(float(facts["pixelSizeMeters"]), 6),
+                "reason": "Tamanho do pixel do raster, em metros.",
+            }
+        )
 
     if facts.get("crs") and not metadata.get("referenceSystem"):
-        changes.append({
-            "id": "referenceSystem",
-            "label": "Sistema de referência",
-            "old": None,
-            "new": facts["crs"],
-            "reason": "SRC da camada.",
-        })
+        changes.append(
+            {
+                "id": "referenceSystem",
+                "label": "Sistema de referência",
+                "old": None,
+                "new": facts["crs"],
+                "reason": "SRC da camada.",
+            }
+        )
     return changes
 
 
