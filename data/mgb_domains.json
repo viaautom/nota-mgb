@@ -1,0 +1,187 @@
+{
+  "_fonte": "Perfil MGB 2.0 (IBGE/DSG, 2021), Listas controladas. Rótulos em português conforme os quadros oficiais.",
+  "domains": {
+    "MD_TopicCategoryCode": {
+      "quadro": 58,
+      "values": {
+        "farming": "Agricultura e pecuária",
+        "biota": "Biota",
+        "boundaries": "Limites territoriais",
+        "climatologyMeteorologyAtmosphere": "Climatologia e atmosfera",
+        "economy": "Economia",
+        "elevation": "Altimetria e batimetria",
+        "environment": "Meio ambiente",
+        "geoscientificInformation": "Informação geocientífica",
+        "health": "Saúde",
+        "imageryBaseMapsEarthCover": "Cartografia de referência e imageamento",
+        "intelligenceMilitary": "Inteligência militar",
+        "inlandWaters": "Águas interiores",
+        "location": "Localização",
+        "oceans": "Oceanos",
+        "planningCadastre": "Planejamento e cadastro",
+        "society": "Sociedade",
+        "structure": "Edificação",
+        "transportation": "Transportes",
+        "utilitiesCommunication": "Serviços públicos e comunicação",
+        "extraTerrestrial": "Extraterrestre",
+        "disaster": "Desastres"
+      }
+    },
+    "CI_DateTypeCode": {
+      "quadro": 71,
+      "values": {
+        "creation": "Criação",
+        "publication": "Publicação",
+        "revision": "Revisão",
+        "expiry": "Expiração",
+        "nextUpdate": "Próxima atualização",
+        "unavailable": "Não disponível",
+        "deprecated": "Descontinuado",
+        "distribution": "Distribuição"
+      }
+    },
+    "CI_OnLineFunctionCode": {
+      "quadro": 72,
+      "values": {
+        "download": "Download",
+        "information": "Informação",
+        "offlineAccess": "Acesso offline",
+        "order": "Pedido",
+        "search": "Busca",
+        "completeMetadata": "Metadados",
+        "browseGraphic": "Representação gráfica",
+        "upload": "Upload",
+        "browsing": "Navegação",
+        "fileAccess": "Acesso a arquivos"
+      }
+    },
+    "CI_RoleCode": {
+      "quadro": 73,
+      "values": {
+        "resourceProvider": "Provedor",
+        "custodian": "Detentor",
+        "owner": "Proprietário",
+        "distributor": "Distribuidor",
+        "originator": "Criador",
+        "pointOfContact": "Contato",
+        "processor": "Processador",
+        "publisher": "Editor",
+        "author": "Autor",
+        "sponsor": "Patrocinador",
+        "coAuthor": "Coautor",
+        "collaborator": "Colaborador",
+        "editor": "Revisor",
+        "rightsHolder": "Detentor dos direitos",
+        "contributor": "Contribuidor",
+        "funder": "Financiador"
+      }
+    },
+    "MD_ProgressCode": {
+      "quadro": 75,
+      "values": {
+        "completed": "Concluído",
+        "historicalArchive": "Arquivo histórico",
+        "obsolete": "Obsoleto",
+        "onGoing": "Em andamento",
+        "planned": "Planejado",
+        "required": "Requerido",
+        "underDevelopment": "Em desenvolvimento",
+        "superseded": "Substituído"
+      }
+    },
+    "MD_ScopeCode": {
+      "quadro": 76,
+      "values": {
+        "attribute": "Atributo",
+        "attributeType": "Tipo de atributo",
+        "collectionHardware": "Coleção de hardware",
+        "dataset": "Conjunto de dados",
+        "series": "Série",
+        "nonGeographicDataset": "Conjunto de dados não geográfico",
+        "feature": "Feição",
+        "featureType": "Tipo de feição",
+        "propertyType": "Tipo de propriedade",
+        "fieldSession": "Sessão de campo",
+        "software": "Software",
+        "service": "Serviço",
+        "model": "Modelo",
+        "tile": "Tile",
+        "metadata": "Metadados",
+        "initiative": "Iniciativa",
+        "sample": "Amostra",
+        "document": "Documento",
+        "repository": "Repositório",
+        "collection": "Coleção",
+        "application": "Aplicação"
+      }
+    },
+    "MD_SpatialRepresentationTypeCode": {
+      "quadro": 77,
+      "values": {
+        "vector": "Vetorial",
+        "grid": "Matricial",
+        "textTable": "Texto ou tabela",
+        "tin": "Rede triangular irregular",
+        "stereoModel": "Modelo estereoscópico",
+        "video": "Vídeo"
+      }
+    },
+    "LanguageCode": {
+      "quadro": 78,
+      "source": "ISO 639-2 (três letras). O quadro lista só valores comuns; qualquer código ISO 639-2 é aceito.",
+      "pattern": "^[a-z]{3}$",
+      "values": {
+        "por": "Português",
+        "eng": "Inglês",
+        "spa": "Espanhol",
+        "fra": "Francês",
+        "deu": "Alemão",
+        "ita": "Italiano",
+        "chi": "Chinês"
+      },
+      "suggestions": {
+        "pt": "por",
+        "pt-br": "por",
+        "pt_br": "por",
+        "portugues": "por",
+        "português": "por",
+        "portuguese": "por",
+        "en": "eng",
+        "english": "eng",
+        "es": "spa",
+        "fr": "fra",
+        "de": "deu",
+        "it": "ita"
+      }
+    },
+    "MD_CharacterSetCode": {
+      "quadro": 80,
+      "source": "Nomes IANA. O XML ISO 19115-3 usado pela INDE grava o valor da lista ISO (ex.: utf8), aceito como equivalente.",
+      "values": {
+        "UTF-8": "UTF-8",
+        "ISO-8859-1": "ISO-8859-1",
+        "US-ASCII": "US-ASCII",
+        "Windows-1252": "Windows-1252",
+        "ISO-8859-14": "ISO-8859-14"
+      },
+      "extra_values": {
+        "UTF-16": "UTF-16",
+        "ISO-8859-15": "ISO-8859-15"
+      },
+      "equivalents": {
+        "utf8": "UTF-8",
+        "utf-16": "UTF-16",
+        "utf16": "UTF-16",
+        "8859part1": "ISO-8859-1",
+        "8859part14": "ISO-8859-14",
+        "8859part15": "ISO-8859-15",
+        "latin1": "ISO-8859-1",
+        "latin8": "ISO-8859-14",
+        "usascii": "US-ASCII",
+        "ascii": "US-ASCII",
+        "cp1252": "Windows-1252",
+        "system": null
+      }
+    }
+  }
+}

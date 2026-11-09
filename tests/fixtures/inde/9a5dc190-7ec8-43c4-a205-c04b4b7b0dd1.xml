@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdb:MD_Metadata xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0"
+                 xmlns:cat="http://standards.iso.org/iso/19115/-3/cat/1.0"
+                 xmlns:gfc="http://standards.iso.org/iso/19110/gfc/1.1"
+                 xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0"
+                 xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0"
+                 xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
+                 xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
+                 xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.1"
+                 xmlns:mas="http://standards.iso.org/iso/19115/-3/mas/1.0"
+                 xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
+                 xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
+                 xmlns:mda="http://standards.iso.org/iso/19115/-3/mda/1.0"
+                 xmlns:mds="http://standards.iso.org/iso/19115/-3/mds/2.0"
+                 xmlns:mdt="http://standards.iso.org/iso/19115/-3/mdt/2.0"
+                 xmlns:mex="http://standards.iso.org/iso/19115/-3/mex/1.0"
+                 xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0"
+                 xmlns:mpc="http://standards.iso.org/iso/19115/-3/mpc/1.0"
+                 xmlns:mrc="http://standards.iso.org/iso/19115/-3/mrc/2.0"
+                 xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0"
+                 xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
+                 xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0"
+                 xmlns:mrs="http://standards.iso.org/iso/19115/-3/mrs/1.0"
+                 xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/2.0"
+                 xmlns:mdq="http://standards.iso.org/iso/19157/-2/mdq/1.0"
+                 xmlns:mac="http://standards.iso.org/iso/19115/-3/mac/2.0"
+                 xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
+                 xmlns:gml="http://www.opengis.net/gml/3.2"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mds/2.0 http://standards.iso.org/iso/19115/-3/mds/2.0/mds.xsd">
+  <mdb:metadataIdentifier>
+      <mcc:MD_Identifier>
+         <mcc:code>
+            <gco:CharacterString>9a5dc190-7ec8-43c4-a205-c04b4b7b0dd1</gco:CharacterString>
+         </mcc:code>
+         <mcc:codeSpace>
+            <gco:CharacterString>urn:uuid</gco:CharacterString>
+         </mcc:codeSpace>
+      </mcc:MD_Identifier>
+  </mdb:metadataIdentifier>
+  <mdb:defaultLocale xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/1.0">
+      <lan:PT_Locale id="PT">
+         <lan:language>
+            <lan:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="por"/>
+         </lan:language>
+         <lan:characterEncoding>
+            <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode"
+                                     codeListValue="utf8"/>
+         </lan:characterEncoding>
+      </lan:PT_Locale>
+  </mdb:defaultLocale>
+  <mdb:metadataScope xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/1.0">
+      <mdb:MD_MetadataScope>
+         <mdb:resourceScope>
+            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode"
+                              codeListValue="dataset"/>
+         </mdb:resourceScope>
+      </mdb:MD_MetadataScope>
+  </mdb:metadataScope>
+  <mdb:contact xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/1.0">
+      <cit:CI_Responsibility>
+         <cit:role>
+            <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode"
+                             codeListValue="originator"/>
+         </cit:role>
+         <cit:party>
+            <cit:CI_Organisation>
+               <cit:name>
+                  <gco:CharacterString>Fundação Instituto Brasileiro de Geografia e Estatística</gco:CharacterString>
+               </cit:name>
+            </cit:CI_Organisation>
+         </cit:party>
+      </cit:CI_Responsibility>
+  </mdb:contact>
+  <mdb:dateInfo>
+      <cit:CI_Date>
+         <cit:date>
+            <gco:DateTime>2026-11-06T16:02:00</gco:DateTime>
+         </cit:date>
+         <cit:dateType>
+            <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
+                                 codeListValue="revision"/>
+         </cit:dateType>
+      </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:dateInfo xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/1.0">
+      <cit:CI_Date>
+         <cit:date>
+            <gco:Date>2020-07-17</gco:Date>
+         </cit:date>
+         <cit:dateType>
+            <cit:CI_DateTypeCode codeList="codelist.xml#CI_DateTypeCode" codeListValue="creation"/>
+         </cit:dateType>
+      </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:metadataStandard xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/1.0">
+      <cit:CI_Citation>
+         <cit:title>
+            <gco:CharacterString>ISO 19115-3:2014</gco:CharacterString>
+         </cit:title>
+      </cit:CI_Citation>
+  </mdb:metadataStandard>
+  <mdb:metadataProfile xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/1.0">
+      <cit:CI_Citation>
+         <cit:title>
+            <gco:CharacterString>Perfil MGB 2.0</gco:CharacterString>
+         </cit:title>
+      </cit:CI_Citation>
+  </mdb:metadataProfile>
+  <mdb:metadataLinkage>
+      <cit:CI_OnlineResource>
+         <cit:linkage>
+            <gco:CharacterString>https://metadadosgeo.ibge.gov.br/geonetwork_ibge/srv/api/records/15c80f0a-e96e-451a-b332-85840ee94a9e</gco:CharacterString>
+         </cit:linkage>
+         <cit:function>
+            <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode"
+                                       codeListValue="completeMetadata"/>
+         </cit:function>
+      </cit:CI_OnlineResource>
+  </mdb:metadataLinkage>
+  <mdb:identificationInfo xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/1.0">
+      <mri:MD_DataIdentification>
+         <mri:citation>
+            <cit:CI_Citation>
+               <cit:title>
+                  <gco:CharacterString>Indicador 8.6.1 - Percentagem de jovens (15-24) que não estão na força de trabalho (ocupados e não ocupados), não são estudantes e nem estão em treinamento para o trabalho, por Grande Região. 2024</gco:CharacterString>
+               </cit:title>
+               <cit:date>
+                  <cit:CI_Date>
+                     <cit:date>
+                        <gco:Date>2026-11-06</gco:Date>
+                     </cit:date>
+                     <cit:dateType>
+                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode"
+                                             codeListValue="creation"/>
+                     </cit:dateType>
+                  </cit:CI_Date>
+               </cit:date>
+            </cit:CI_Citation>
+         </mri:citation>
+         <mri:abstract>
+            <gco:CharacterString>1. Pessoas não ocupadas: As pessoas não ocupadas na semana de referência são formadas pelas pessoas que foram classificadas como desocupadas ou fora da força de trabalho nessa semana. 2. Pessoas desocupadas: São classificadas como desocupadas na semana de referência as pessoas sem trabalho em ocupação nessa semana que tomaram alguma providência efetiva para consegui-lo no período de referência de 30 dias, e que estavam disponíveis para assumi-lo na semana de referência. Consideram-se, também, como desocupadas as pessoas sem trabalho em ocupação na semana de referência que não tomaram providência efetiva para consegui-lo no período de referência de 30 dias porque já o haviam conseguido e iriam começá-lo em menos de quatro meses após o último dia da semana de referência. 3. Pessoas fora da força de trabalho: São classificadas como fora da força de trabalho na semana de referência as pessoas que não estavam ocupadas nem desocupadas nessa semana. 4. Pessoas ocupadas: São classificadas como ocupadas na semana de referência as pessoas que, nesse período, trabalharam pelo menos uma hora completa em trabalho remunerado em dinheiro, produtos, mercadorias ou benefícios (moradia, alimentação, roupas, treinamento etc.), ou em trabalho sem remuneração direta em ajuda à atividade econômica de membro do domicílio ou parente que reside em outro domicílio, ou, ainda, as que tinham trabalho remunerado do qual estavam temporariamente afastadas nessa semana. Consideram-se como ocupadas temporariamente afastadas de trabalho remunerado as pessoas que não trabalharam durante pelo menos uma hora completa na semana de referência por motivo de férias, folga, jornada variável ou licença remunerada (em decorrência de maternidade, paternidade, saúde ou acidente da própria pessoa, estudo, casamento, licença-prêmio etc.). Além disso, também foram consideradas ocupadas as pessoas afastadas por motivo diferente dos já citados, desde que o período transcorrido do afastamento fosse inferior a quatro meses, contados até o último dia da semana de referência. 5. Condição de estudo: A condição de estudo, além da frequência à escola ou creche, incluiu a frequência a curso: pré-vestibular, técnico de nível médio ou curso normal (magistério) e qualificação profissional. Mais informações podem ser vistas nas tabelas Sidra associadas.</gco:CharacterString>
+         </mri:abstract>
+         <mri:status>
+            <mcc:MD_ProgressCode codeListValue="completed"
+                                 codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode"/>
+         </mri:status>
+         <mri:pointOfContact>
+            <cit:CI_Responsibility>
+               <cit:role>
+                  <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode"
+                                   codeListValue="originator"/>
+               </cit:role>
+               <cit:party>
+                  <cit:CI_Organisation>
+                     <cit:name>
+                        <gco:CharacterString>Fundação Instituto Brasileiro de Geografia e Estatística - Diretoria de Geociências</gco:CharacterString>
+                     </cit:name>
+                  </cit:CI_Organisation>
+               </cit:party>
+            </cit:CI_Responsibility>
+         </mri:pointOfContact>
+         <mri:spatialRepresentationType>
+            <mcc:MD_SpatialRepresentationTypeCode codeListValue="vector"
+                                                  codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_SpatialRepresentationTypeCode"/>
+         </mri:spatialRepresentationType>
+         <mri:spatialResolution>
+            <mri:MD_Resolution>
+               <mri:equivalentScale>
+                  <mri:MD_RepresentativeFraction>
+                     <mri:denominator>
+                        <gco:Integer/>
+                     </mri:denominator>
+                  </mri:MD_RepresentativeFraction>
+               </mri:equivalentScale>
+            </mri:MD_Resolution>
+         </mri:spatialResolution>
+         <mri:topicCategory>
+            <mri:MD_TopicCategoryCode>environment</mri:MD_TopicCategoryCode>
+         </mri:topicCategory>
+         <mri:topicCategory>
+            <mri:MD_TopicCategoryCode>society</mri:MD_TopicCategoryCode>
+         </mri:topicCategory>
+         <mri:extent>
+            <gex:EX_Extent>
+               <gex:geographicElement>
+                  <gex:EX_GeographicBoundingBox>
+                     <gex:westBoundLongitude>
+                        <gco:Decimal>-74.018</gco:Decimal>
+                     </gex:westBoundLongitude>
+                     <gex:eastBoundLongitude>
+                        <gco:Decimal>-28.877</gco:Decimal>
+                     </gex:eastBoundLongitude>
+                     <gex:southBoundLatitude>
+                        <gco:Decimal>-33.742</gco:Decimal>
+                     </gex:southBoundLatitude>
+                     <gex:northBoundLatitude>
+                        <gco:Decimal>5.2672</gco:Decimal>
+                     </gex:northBoundLatitude>
+                  </gex:EX_GeographicBoundingBox>
+               </gex:geographicElement>
+            </gex:EX_Extent>
+         </mri:extent>
+         <mri:graphicOverview>
+            <mcc:MD_BrowseGraphic>
+               <mcc:fileName>
+                  <gco:CharacterString>https://geoservicos.ibge.gov.br/geoserver/ODS/ows?service=WMS&amp;version=1.1.0&amp;request=GetMap&amp;layers=ODS:ods_8_6_1_2024_rg_1&amp;styles=&amp;bbox=-73.9913915619596,-33.75201372634794,-34.793703165018,5.271789907632981&amp;width=246&amp;height=245&amp;tiled=true&amp;srs=EPSG:4326&amp;format=image/png&amp;transparent=true</gco:CharacterString>
+               </mcc:fileName>
+            </mcc:MD_BrowseGraphic>
+         </mri:graphicOverview>
+         <mri:descriptiveKeywords>
+            <mri:MD_Keywords>
+               <mri:keyword>
+                  <gco:CharacterString>Objetivos de Desenvolvimento Sustentável</gco:CharacterString>
+               </mri:keyword>
+               <mri:keyword>
+                  <gco:CharacterString>Trabalho Decente e Crescimento Econômico</gco:CharacterString>
+               </mri:keyword>
+            </mri:MD_Keywords>
+         </mri:descriptiveKeywords>
+         <mri:defaultLocale>
+            <lan:PT_Locale>
+               <lan:language>
+                  <lan:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="por"/>
+               </lan:language>
+               <lan:characterEncoding>
+                  <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode"
+                                           codeListValue="utf8"/>
+               </lan:characterEncoding>
+            </lan:PT_Locale>
+         </mri:defaultLocale>
+      </mri:MD_DataIdentification>
+  </mdb:identificationInfo>
+  <mdb:distributionInfo>
+      <mrd:MD_Distribution>
+         <mrd:transferOptions>
+            <mrd:MD_DigitalTransferOptions>
+               <mrd:onLine>
+                  <cit:CI_OnlineResource>
+                     <cit:linkage>
+                        <gco:CharacterString>https://geoservicos.ibge.gov.br/geoserver/ODS/ows?service=wms&amp;request=Getcapabilities&amp;version=1.3.0</gco:CharacterString>
+                     </cit:linkage>
+                     <cit:protocol>
+                        <gco:CharacterString>OGC:WMS</gco:CharacterString>
+                     </cit:protocol>
+                     <cit:name>
+                        <gco:CharacterString>ODS:ods_8_6_1_2024_rg_1</gco:CharacterString>
+                     </cit:name>
+                     <cit:description>
+                        <gco:CharacterString>Indicador 8.6.1 - Percentagem de jovens (15-24) que não estão na força de trabalho (ocupados e não ocupados), não são estudantes e nem estão em treinamento para o trabalho, por Grande Região. 2024</gco:CharacterString>
+                     </cit:description>
+                     <cit:function>
+                        <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="browsing"/>
+                     </cit:function>
+                  </cit:CI_OnlineResource>
+               </mrd:onLine>
+               <mrd:onLine>
+                  <cit:CI_OnlineResource>
+                     <cit:linkage>
+                        <gco:CharacterString>https://geoservicos.ibge.gov.br/geoserver/ODS/wfs?service=wfs&amp;version=2.0.0&amp;request=Getcapabilities</gco:CharacterString>
+                     </cit:linkage>
+                     <cit:protocol>
+                        <gco:CharacterString>OGC:WFS</gco:CharacterString>
+                     </cit:protocol>
+                     <cit:name>
+                        <gco:CharacterString>ODS:ods_8_6_1_2024_rg_1</gco:CharacterString>
+                     </cit:name>
+                     <cit:description>
+                        <gco:CharacterString>Indicador 8.6.1 - Percentagem de jovens (15-24) que não estão na força de trabalho (ocupados e não ocupados), não são estudantes e nem estão em treinamento para o trabalho, por Grande Região. 2024</gco:CharacterString>
+                     </cit:description>
+                     <cit:function>
+                        <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="download"/>
+                     </cit:function>
+                  </cit:CI_OnlineResource>
+               </mrd:onLine>
+            </mrd:MD_DigitalTransferOptions>
+         </mrd:transferOptions>
+      </mrd:MD_Distribution>
+  </mdb:distributionInfo>
+</mdb:MD_Metadata>
